@@ -9,7 +9,7 @@ import Typography from "@mui/material/Typography";
 import { TextField } from "@mui/material";
 import Link from "next/link";
 
-export default function SignUpCard() {
+export default function LoginCard() {
   const sxTextField = {
     width: "100%",
     mb: 2,
@@ -26,18 +26,12 @@ export default function SignUpCard() {
             mb: 4,
           }}
         >
-          Sign Up
+          Login
         </Typography>
         <TextField label="email" variant="filled" sx={sxTextField} />
         <TextField
           onInput={(e) => console.log(e)}
           label="password"
-          variant="filled"
-          sx={sxTextField}
-        />
-        <TextField
-          onInput={(e) => console.log(e)}
-          label="confirmPassword"
           variant="filled"
           sx={sxTextField}
         />
@@ -56,10 +50,7 @@ export default function SignUpCard() {
         </Button>
       </CardActions>
       <div className="m-2">
-        Already have an account?{" "}
-        <Link href="/login" className="text-blue-600 underline">
-          Login
-        </Link>
+        Don't have an account? <Link href="/sign-up">Sign Up</Link>
       </div>
     </Card>
   );
