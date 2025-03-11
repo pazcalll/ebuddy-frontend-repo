@@ -50,7 +50,7 @@ export default function LoginCard() {
         </Button>
       </CardActions>
       <div className="m-2">
-        Don't have an account? <Link href="/sign-up">Sign Up</Link>
+        Don`t have an account? <Link href="/sign-up">Sign Up</Link>
       </div>
     </Card>
   );
