@@ -8,39 +8,67 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { TextField } from "@mui/material";
 import Link from "next/link";
+import register, { TRegister } from "@/api/register";
 
 export default function SignUpCard() {
+  const [signUpData, setSignUpData] = React.useState<TRegister>({
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const formRef = React.useRef<HTMLFormElement>(null);
+
   const sxTextField = {
     width: "100%",
     mb: 2,
   };
 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const response = await register(signUpData);
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   return (
     <Card className="w-full max-w-[28rem] sm:min-w-[24rem] sm:max-w-[30rem] shadow-lg rounded-lg overflow-hidden">
       <CardContent>
-        <Typography
-          gutterBottom
-          sx={{
-            fontSize: 24,
-            fontWeight: "bold",
-            mb: 4,
-          }}
-        >
-          Sign Up
-        </Typography>
-        <TextField label="email" variant="filled" sx={sxTextField} />
-        <TextField
-          onInput={(e) => console.log(e)}
-          label="password"
-          variant="filled"
-          sx={sxTextField}
-        />
-        <TextField
-          onInput={(e) => console.log(e)}
-          label="confirmPassword"
-          variant="filled"
-          sx={sxTextField}
-        />
+        <form ref={formRef} onSubmit={handleSubmit} method="POST">
+          <Typography
+            gutterBottom
+            sx={{
+              fontSize: 24,
+              fontWeight: "bold",
+              mb: 4,
+            }}
+          >
+            Sign Up
+          </Typography>
+          <TextField
+            label="email"
+            variant="filled"
+            sx={sxTextField}
+            onInput={(e) => setSignUpData({...signUpData, email: e.target.value})}
+          />
+          <TextField
+            label="password"
+            variant="filled"
+            sx={sxTextField}
+            type="password"
+            onInput={(e) => setSignUpData({...signUpData, password: e.target.value})}
+          />
+          <TextField
+            label="confirmPassword"
+            variant="filled"
+            type="password"
+            sx={sxTextField}
+            onInput={(e) => setSignUpData({...signUpData, confirmPassword: e.target.value})}
+          />
+        </form>
       </CardContent>
       <CardActions>
         <Button
@@ -51,6 +79,8 @@ export default function SignUpCard() {
             mx: "auto",
             width: "100%",
           }}
+          onClick={() => formRef.current?.dispatchEvent(new Event('submit', { cancelable: true , bubbles: true} ))}
+          type="button"
         >
           Submit
         </Button>
