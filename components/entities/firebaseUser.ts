@@ -55,16 +55,9 @@ const FirebaseUserProfileSchema = z.object({
     .nullish(),
 });
 
-type TFirebaseUser = z.infer<typeof FirebaseUserSchema>;
-type TTokenManager = z.infer<typeof TokenManagerSchema>;
-type TProviderData = z.infer<typeof ProviderDataSchema>;
-type TFirebaseUserProfile = z.infer<typeof FirebaseUserProfileSchema>;
+export type TFirebaseUser = z.infer<typeof FirebaseUserSchema>;
+export type TTokenManager = z.infer<typeof TokenManagerSchema>;
+export type TProviderData = z.infer<typeof ProviderDataSchema>;
+export type TFirebaseUserProfile = z.infer<typeof FirebaseUserProfileSchema>;
 
-export {
-  FirebaseUserSchema,
-  FirebaseUserProfileSchema,
-  TFirebaseUser,
-  TTokenManager,
-  TProviderData,
-  TFirebaseUserProfile,
-};
+export { FirebaseUserSchema, FirebaseUserProfileSchema };

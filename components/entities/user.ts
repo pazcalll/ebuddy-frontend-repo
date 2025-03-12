@@ -11,6 +11,6 @@ const UserSchema = z.object({
   recentlyActive: z.number(validationOptions),
 });
 
-type TUser = z.infer<typeof UserSchema>;
+export type TUser = z.infer<typeof UserSchema>;
 
-export { UserSchema, TUser };
+export { UserSchema };
