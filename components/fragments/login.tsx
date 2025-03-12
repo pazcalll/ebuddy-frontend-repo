@@ -11,7 +11,7 @@ import Link from "next/link";
 import { TLogin } from "../entities/auth";
 import { login } from "@/api/login";
 import profile from "@/api/profile";
-import { useAppDispatch, useAppSelector } from "@/store/store";
+import { useAppDispatch } from "@/store/store";
 import { useRouter } from "next/navigation";
 
 export default function LoginCard() {
@@ -21,7 +21,6 @@ export default function LoginCard() {
     password: "",
   });
   const formRef = React.useRef<HTMLFormElement>(null);
-  const selector = useAppSelector((state) => state.firebaseUserProfile);
   const dispatch = useAppDispatch();
 
   const sxTextField = {
@@ -64,7 +63,10 @@ export default function LoginCard() {
             variant="filled"
             sx={sxTextField}
             onInput={(e) =>
-              setLoginData({ ...loginData, email: e.target.value })
+              setLoginData({
+                ...loginData,
+                email: (e.target as HTMLInputElement).value,
+              })
             }
           />
           <TextField
@@ -73,7 +75,10 @@ export default function LoginCard() {
             sx={sxTextField}
             type="password"
             onInput={(e) =>
-              setLoginData({ ...loginData, password: e.target.value })
+              setLoginData({
+                ...loginData,
+                password: (e.target as HTMLInputElement).value,
+              })
             }
           />
         </form>

@@ -1,14 +1,8 @@
 "use client";
 
 import profile from "@/api/profile";
-import { TFirebaseUserProfile } from "@/components/entities/firebaseUser";
-import { TMessage } from "@/components/entities/message";
 import { ValidationError } from "@/components/exceptions/validation-error";
-import {
-  decrement,
-  increment,
-  setFirebaseUserProfile,
-} from "@/store/counterSlice";
+import { setFirebaseUserProfile } from "@/store/counterSlice";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { useEffect } from "react";
 

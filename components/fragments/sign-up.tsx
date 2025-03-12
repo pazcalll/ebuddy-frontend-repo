@@ -53,7 +53,10 @@ export default function SignUpCard() {
             variant="filled"
             sx={sxTextField}
             onInput={(e) =>
-              setSignUpData({ ...signUpData, email: e.target.value })
+              setSignUpData({
+                ...signUpData,
+                email: (e.target as HTMLInputElement).value,
+              })
             }
           />
           <TextField
@@ -62,7 +65,10 @@ export default function SignUpCard() {
             sx={sxTextField}
             type="password"
             onInput={(e) =>
-              setSignUpData({ ...signUpData, password: e.target.value })
+              setSignUpData({
+                ...signUpData,
+                password: (e.target as HTMLInputElement).value,
+              })
             }
           />
           <TextField
@@ -71,7 +77,10 @@ export default function SignUpCard() {
             type="password"
             sx={sxTextField}
             onInput={(e) =>
-              setSignUpData({ ...signUpData, confirmPassword: e.target.value })
+              setSignUpData({
+                ...signUpData,
+                confirmPassword: (e.target as HTMLInputElement).value,
+              })
             }
           />
         </form>

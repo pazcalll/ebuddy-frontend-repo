@@ -8,6 +8,7 @@ export default async function Home() {
     if ("message" in firebaseUserProfile && !("uid" in firebaseUserProfile))
       redirect("/login");
   } catch (error) {
+    console.log(error);
     redirect("/login");
   }
 
