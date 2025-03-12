@@ -1,20 +1,17 @@
+"use server";
+
 import {
   TAuthenticatedUser,
   TAuthValidationError,
+  TLogin,
 } from "@/components/entities/auth";
-import { TMessage } from "@/components/entities/message";
 import { ValidationError } from "@/components/exceptions/validation-error";
 
-export type TLogin = {
-  email: string;
-  password: string;
-};
-
-const login = async (
+export const login = async (
   payload: TLogin
 ): Promise<TAuthenticatedUser | TAuthValidationError> => {
   try {
-    const response = await fetch(process.env.BACKEND_URL + "/authentication", {
+    const response = await fetch(process.env.BACKEND_URL + "/login", {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -27,6 +24,7 @@ const login = async (
       const error: TAuthValidationError = await response.json();
       throw new ValidationError<TAuthValidationError>(error);
     }
+    console.log(response);
 
     const data: TAuthenticatedUser = await response.json();
     return data;
@@ -37,5 +35,3 @@ const login = async (
     throw error;
   }
 };
-
-export default login;

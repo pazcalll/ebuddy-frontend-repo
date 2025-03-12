@@ -8,7 +8,8 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { TextField } from "@mui/material";
 import Link from "next/link";
-import login, { TLogin } from "@/api/login";
+import { TLogin } from "../entities/auth";
+import { login } from "@/api/login";
 
 export default function LoginCard() {
   const [loginData, setLoginData] = React.useState<TLogin>({
@@ -47,17 +48,21 @@ export default function LoginCard() {
             Login
           </Typography>
           <TextField
-            label="email"
+            label="Email"
             variant="filled"
             sx={sxTextField}
-            onInput={(e) => setLoginData({ ...loginData, email: e.target.value })}
+            onInput={(e) =>
+              setLoginData({ ...loginData, email: e.target.value })
+            }
           />
           <TextField
-            label="password"
+            label="Password"
             variant="filled"
             sx={sxTextField}
             type="password"
-            onInput={(e) => setLoginData({ ...loginData, password: e.target.value })}
+            onInput={(e) =>
+              setLoginData({ ...loginData, password: e.target.value })
+            }
           />
         </form>
       </CardContent>
@@ -70,14 +75,20 @@ export default function LoginCard() {
             mx: "auto",
             width: "100%",
           }}
-          onClick={() => formRef.current?.dispatchEvent(new Event("submit", { cancelable: true }))}
+          onClick={() => {
+            formRef.current?.dispatchEvent(
+              new Event("submit", { cancelable: true, bubbles: true })
+            );
+          }}
         >
           Submit
         </Button>
       </CardActions>
-      <div className="m-2">
-        Don`t have an account? <Link href="/sign-up">Sign Up</Link>
-      </div>
+      <CardActions>
+        <p className="w-full text-center">
+          Don`t have an account? <Link href="/sign-up">Sign Up</Link>
+        </p>
+      </CardActions>
     </Card>
   );
 }

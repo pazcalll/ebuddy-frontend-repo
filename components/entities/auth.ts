@@ -28,18 +28,14 @@ const LoginSchema = BaseAuthSchema.omit({ confirmPassword: true });
 
 const AuthValidationErrorSchema = z.record(z.array(z.string()));
 
-type TAuth = z.infer<typeof RegisterSchema>;
-type TAuthenticatedUser = z.infer<typeof AuthenticatedUserSchema>;
-type TLogin = z.infer<typeof LoginSchema>;
-type TAuthValidationError = z.infer<typeof AuthValidationErrorSchema>;
+export type TAuth = z.infer<typeof RegisterSchema>;
+export type TAuthenticatedUser = z.infer<typeof AuthenticatedUserSchema>;
+export type TLogin = z.infer<typeof LoginSchema>;
+export type TAuthValidationError = z.infer<typeof AuthValidationErrorSchema>;
 
 export {
   RegisterSchema,
-  TAuth,
   AuthenticatedUserSchema,
-  TAuthenticatedUser,
   LoginSchema,
-  TLogin,
   AuthValidationErrorSchema,
-  TAuthValidationError,
 };

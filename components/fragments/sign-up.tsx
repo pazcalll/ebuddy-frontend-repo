@@ -32,7 +32,7 @@ export default function SignUpCard() {
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   return (
     <Card className="w-full max-w-[28rem] sm:min-w-[24rem] sm:max-w-[30rem] shadow-lg rounded-lg overflow-hidden">
@@ -49,24 +49,30 @@ export default function SignUpCard() {
             Sign Up
           </Typography>
           <TextField
-            label="email"
+            label="Email"
             variant="filled"
             sx={sxTextField}
-            onInput={(e) => setSignUpData({...signUpData, email: e.target.value})}
+            onInput={(e) =>
+              setSignUpData({ ...signUpData, email: e.target.value })
+            }
           />
           <TextField
-            label="password"
+            label="Password"
             variant="filled"
             sx={sxTextField}
             type="password"
-            onInput={(e) => setSignUpData({...signUpData, password: e.target.value})}
+            onInput={(e) =>
+              setSignUpData({ ...signUpData, password: e.target.value })
+            }
           />
           <TextField
-            label="confirmPassword"
+            label="Confirm Password"
             variant="filled"
             type="password"
             sx={sxTextField}
-            onInput={(e) => setSignUpData({...signUpData, confirmPassword: e.target.value})}
+            onInput={(e) =>
+              setSignUpData({ ...signUpData, confirmPassword: e.target.value })
+            }
           />
         </form>
       </CardContent>
@@ -79,18 +85,24 @@ export default function SignUpCard() {
             mx: "auto",
             width: "100%",
           }}
-          onClick={() => formRef.current?.dispatchEvent(new Event('submit', { cancelable: true , bubbles: true} ))}
+          onClick={() =>
+            formRef.current?.dispatchEvent(
+              new Event("submit", { cancelable: true, bubbles: true })
+            )
+          }
           type="button"
         >
           Submit
         </Button>
       </CardActions>
-      <div className="m-2">
-        Already have an account?{" "}
-        <Link href="/login" className="text-blue-600 underline">
-          Login
-        </Link>
-      </div>
+      <CardActions>
+        <p className="w-full text-center">
+          Already have an account?{" "}
+          <Link href="/login" className="text-blue-600 underline">
+            Login
+          </Link>
+        </p>
+      </CardActions>
     </Card>
   );
 }
