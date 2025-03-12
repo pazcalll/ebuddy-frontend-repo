@@ -1,4 +1,5 @@
 import { TFirebaseUserProfile } from "@/components/entities/firebaseUser";
+import { TUser } from "@/components/entities/user";
 import { createSlice } from "@reduxjs/toolkit";
 
 export type ICounterState = {
@@ -41,9 +42,27 @@ export const firebaseUserProfileSlice = createSlice({
   },
 });
 
+const initialUser: TUser[] | null = null;
+export const usersSlice = createSlice({
+  name: "users",
+  initialState: initialUser,
+  reducers: {
+    setUsers: (state, action) => {
+      const newState = action.payload as TUser[];
+      return newState;
+    },
+    clearUsers: (state) => {
+      return null;
+    },
+  },
+});
+
+export const { increment, decrement, incrementByAmount } = counterSlice.actions;
+export const counterReducer = counterSlice.reducer;
+
 export const { setFirebaseUserProfile, clearFirebaseUserProfile } =
   firebaseUserProfileSlice.actions;
 export const firebaseUserProfileReducer = firebaseUserProfileSlice.reducer;
 
-export const { increment, decrement, incrementByAmount } = counterSlice.actions;
-export const counterReducer = counterSlice.reducer;
+export const { setUsers, clearUsers } = usersSlice.actions;
+export const usersReducer = usersSlice.reducer;
