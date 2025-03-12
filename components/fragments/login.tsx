@@ -10,13 +10,19 @@ import { TextField } from "@mui/material";
 import Link from "next/link";
 import { TLogin } from "../entities/auth";
 import { login } from "@/api/login";
+import profile from "@/api/profile";
+import { useAppDispatch, useAppSelector } from "@/store/store";
+import { useRouter } from "next/navigation";
 
 export default function LoginCard() {
+  const router = useRouter();
   const [loginData, setLoginData] = React.useState<TLogin>({
     email: "",
     password: "",
   });
   const formRef = React.useRef<HTMLFormElement>(null);
+  const selector = useAppSelector((state) => state.firebaseUserProfile);
+  const dispatch = useAppDispatch();
 
   const sxTextField = {
     width: "100%",
@@ -28,6 +34,12 @@ export default function LoginCard() {
     try {
       const response = await login(loginData);
       console.log(response);
+      const firebaseUserProfile = await profile();
+      dispatch({
+        type: "SET_FIREBASE_USER_PROFILE",
+        payload: firebaseUserProfile,
+      });
+      router.push("/");
     } catch (error) {
       console.error(error);
     }

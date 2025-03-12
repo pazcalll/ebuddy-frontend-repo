@@ -1,10 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { counterReducer } from "./counterSlice";
+import { counterReducer, firebaseUserProfileReducer } from "./counterSlice";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
+    firebaseUserProfile: firebaseUserProfileReducer,
   },
 });
 

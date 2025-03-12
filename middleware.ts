@@ -3,8 +3,7 @@ import type { NextRequest } from "next/server";
 import profile from "./api/profile";
 
 export async function middleware(request: NextRequest) {
-  const publicPaths = ["/login", "/sign-up"];
-
+  const protectedRoutes = ["/"];
   const token = request.cookies.get("token")?.value;
 
   const requestHeaders = new Headers(request.headers);
@@ -12,37 +11,27 @@ export async function middleware(request: NextRequest) {
   requestHeaders.set("Pragma", "no-cache");
   requestHeaders.set("Expires", "0");
 
-  const response = NextResponse.redirect(new URL("/", request.url), {
+  const response = NextResponse.redirect(new URL("/login", request.url), {
     headers: requestHeaders,
   });
 
-  if (publicPaths.includes(request.nextUrl.pathname)) {
-    if (token) {
-      // If the user is authenticated, redirect them away from /login and /sign-up
-      return NextResponse.redirect(new URL("/", request.url));
+  const url = request.url.split(request.nextUrl.origin);
+  // console.log(url);
+
+  if (protectedRoutes.includes(url[1])) {
+    if (!token) {
+      console.log("no token");
+      return response;
     }
-
-    // Allow access to /login and /sign-up for non-authenticated users
-    return NextResponse.next();
-  }
-
-  if (!token) {
-    // If the user is not authenticated, redirect them to /login
-    return NextResponse.redirect(new URL("/login", request.url));
-  }
-
-  try {
-    console.log("Checking token");
-    const profileData = await profile();
-    if (!("uid" in profileData) && "message" in profileData) {
-      console.log(profileData);
+    try {
+      const firebaseUserProfile = await profile();
+      console.log(firebaseUserProfile);
+      if ("message" in firebaseUserProfile && !("uid" in firebaseUserProfile))
+        throw new Error(firebaseUserProfile.message);
+    } catch (error) {
       response.cookies.delete("token");
-      return NextResponse.redirect(new URL("/login", request.url));
+      return response;
     }
-  } catch (error) {
-    console.log(error);
-    response.cookies.delete("token");
-    return NextResponse.redirect(new URL("/login", request.url));
   }
 
   return NextResponse.next({

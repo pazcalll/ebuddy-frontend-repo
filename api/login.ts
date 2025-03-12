@@ -6,6 +6,7 @@ import {
   TLogin,
 } from "@/components/entities/auth";
 import { ValidationError } from "@/components/exceptions/validation-error";
+import { cookies } from "next/headers";
 
 export const login = async (
   payload: TLogin
@@ -27,6 +28,8 @@ export const login = async (
     console.log(response);
 
     const data: TAuthenticatedUser = await response.json();
+    (await cookies()).set("token", data.token);
+
     return data;
   } catch (error) {
     if (error instanceof ValidationError) {

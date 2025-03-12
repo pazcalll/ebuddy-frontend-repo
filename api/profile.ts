@@ -1,3 +1,5 @@
+"use server";
+
 import { TFirebaseUserProfile } from "@/components/entities/firebaseUser";
 import { TMessage } from "@/components/entities/message";
 import { cookies } from "next/headers";

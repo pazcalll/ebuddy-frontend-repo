@@ -25,5 +25,25 @@ export const counterSlice = createSlice({
   },
 });
 
+const initialFirebaseUserProfile: TFirebaseUserProfile | null = null;
+
+export const firebaseUserProfileSlice = createSlice({
+  name: "firebaseUserProfile",
+  initialState: initialFirebaseUserProfile,
+  reducers: {
+    setFirebaseUserProfile: (state, action) => {
+      const newState = action.payload as TFirebaseUserProfile;
+      state = newState;
+    },
+    clearFirebaseUserProfile: (state) => {
+      state = null;
+    },
+  },
+});
+
+export const { setFirebaseUserProfile, clearFirebaseUserProfile } =
+  firebaseUserProfileSlice.actions;
+export const firebaseUserProfileReducer = firebaseUserProfileSlice.reducer;
+
 export const { increment, decrement, incrementByAmount } = counterSlice.actions;
 export const counterReducer = counterSlice.reducer;
