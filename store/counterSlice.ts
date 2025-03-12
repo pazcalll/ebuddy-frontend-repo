@@ -33,10 +33,10 @@ export const firebaseUserProfileSlice = createSlice({
   reducers: {
     setFirebaseUserProfile: (state, action) => {
       const newState = action.payload as TFirebaseUserProfile;
-      state = newState;
+      return newState;
     },
     clearFirebaseUserProfile: (state) => {
-      state = null;
+      return null;
     },
   },
 });

@@ -1,17 +1,48 @@
 "use client";
 
-import { decrement, increment } from "@/store/counterSlice";
+import profile from "@/api/profile";
+import { TFirebaseUserProfile } from "@/components/entities/firebaseUser";
+import { TMessage } from "@/components/entities/message";
+import { ValidationError } from "@/components/exceptions/validation-error";
+import {
+  decrement,
+  increment,
+  setFirebaseUserProfile,
+} from "@/store/counterSlice";
 import { useAppDispatch, useAppSelector } from "@/store/store";
+import { useEffect } from "react";
 
 const Profile = () => {
-  const counterState = useAppSelector((state) => state.counter);
+  const firebaseUserProfileState = useAppSelector(
+    (state) => state.firebaseUserProfile
+  );
+
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    const firebaseUserProfile = async () => {
+      try {
+        const profileResponse = await profile();
+        if ("message" in profileResponse && !("uid" in profileResponse))
+          throw new ValidationError(profileResponse.message);
+        else if (!("message" in profileResponse)) {
+          console.log(profileResponse);
+          dispatch(setFirebaseUserProfile(profileResponse));
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    firebaseUserProfile();
+    console.log(firebaseUserProfileState);
+  }, []);
+
   return (
     <div>
-      <h1>Profile</h1>
-      <p>Counter: {counterState.count}</p>
-      <button onClick={() => dispatch(increment())}>increase</button>
-      <button onClick={() => dispatch(decrement())}>decrease</button>
+      <h1>Firebase User</h1>
+      <p>{firebaseUserProfileState?.uid}</p>
+      <p>{firebaseUserProfileState?.email}</p>
     </div>
   );
 };
